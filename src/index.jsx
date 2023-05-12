@@ -1,16 +1,12 @@
-import { createRoot } from 'react-dom/client';
+import { createRoot } from "react-dom/client";
+import { MainView } from "./components/main-view/MainView";
 import "./index.scss";
 
-const FilmForgeApplication = () => {
-    return (
-      <div className="filmforge">
-        <div>Good morning</div>
-      </div>
-    );
-  };
+const App = () => {
+  return <MainView />;
+ };
 
+const container = document.querySelector("#root");
+const root = createRoot(container);
 
-  const container = document.querySelector("#root");
-  const root = createRoot(container);
-
-  root.render(<FilmForgeApplication />);
+root.render(<App/>);
