@@ -27153,72 +27153,27 @@ var _movieView = require("../movie-view/MovieView");
 var _s = $RefreshSig$();
 const MainView = ()=>{
     _s();
-    const [movies, setMovies] = (0, _react.useState)([
-        {
-            _id: {
-                $oid: "644660bcc034b14635f6203f"
-            },
-            title: "Inception",
-            description: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
-            director: "Christopher Nolan",
-            genre: "Action",
-            image: "https://cdn.shopify.com/s/files/1/0057/3728/3618/products/9c592dee1ac813fcaf8c93557a487557_675ff711-4f45-4a98-95a5-0f97302b2126_480x.progressive.jpg?v=1573618688"
-        },
-        {
-            _id: {
-                $oid: "644660bcc034b14635f62040"
-            },
-            title: "The Prestige",
-            description: "After a tragic accident, two stage magicians engage in a battle to create the ultimate illusion while sacrificing everything they have to outwit each other.",
-            director: "Christopher Nolan",
-            genre: "Drama",
-            image: "https://cdn.shopify.com/s/files/1/0057/3728/3618/products/99763af666ee931302e21c9cad3243ed_48a46774-8baf-4a98-b2bc-9ecf85dbff8b_480x.progressive.jpg?v=1573655133"
-        },
-        {
-            _id: {
-                $oid: "644660bcc034b14635f62041"
-            },
-            title: "Memento",
-            description: "A man with short-term memory loss attempts to track down his wife's murderer.",
-            director: "Christopher Nolan",
-            genre: "Thriller",
-            image: "https://cdn.shopify.com/s/files/1/0057/3728/3618/products/memento24_480x.progressive.jpg?v=1617303456"
-        },
-        {
-            _id: {
-                $oid: "644660bcc034b14635f62042"
-            },
-            title: "Interstellar",
-            description: "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
-            director: "Christopher Nolan",
-            genre: "Sci-Fi",
-            image: "https://cdn.shopify.com/s/files/1/0057/3728/3618/products/interstellar5_480x.progressive.jpg?v=1585846879"
-        },
-        {
-            _id: {
-                $oid: "644660bcc034b14635f62043"
-            },
-            title: "Blade Runner 2049",
-            description: "A young blade runner's discovery of a long-buried secret leads him to track down former blade runner Rick Deckard, who's been missing for thirty years.",
-            director: "Denis Villeneuve",
-            genre: "Sci-Fi",
-            image: "https://cdn.shopify.com/s/files/1/0057/3728/3618/products/07c231f2775f4ece93b1af53e5009298_5e9d1433-5ebd-4343-956c-5478acce8afa_480x.progressive.jpg?v=1573618953"
-        }
-    ]);
+    const [movies, setMovies] = (0, _react.useState)([]);
     const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
+    (0, _react.useEffect)(()=>{
+        fetch("https://filmforge.herokuapp.com/movies").then((response)=>response.json().then((data)=>{
+                console.log(data);
+                setMovies(data);
+            }));
+    }, []);
     if (selectedMovie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieView.MovieView), {
         movie: selectedMovie,
         onBackClick: ()=>setSelectedMovie(null)
     }, void 0, false, {
         fileName: "src/components/main-view/MainView.jsx",
-        lineNumber: 58,
+        lineNumber: 22,
         columnNumber: 7
     }, undefined);
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "The list is empty!"
     }, void 0, false, {
         fileName: "src/components/main-view/MainView.jsx",
-        lineNumber: 63,
+        lineNumber: 30,
         columnNumber: 12
     }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -27229,16 +27184,16 @@ const MainView = ()=>{
                 }
             }, movie.id, false, {
                 fileName: "src/components/main-view/MainView.jsx",
-                lineNumber: 69,
+                lineNumber: 36,
                 columnNumber: 9
             }, undefined))
     }, void 0, false, {
         fileName: "src/components/main-view/MainView.jsx",
-        lineNumber: 67,
+        lineNumber: 34,
         columnNumber: 5
     }, undefined);
 };
-_s(MainView, "3TVksL8QyYNVal7lCoXyuJMB+FQ=");
+_s(MainView, "PO+XgOji7E32nFJj3H5UPLPJ7w4=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");
@@ -27274,14 +27229,23 @@ const MovieCard = ({ movie , onMovieClick  })=>{
     }, undefined);
 };
 _c = MovieCard;
-MovieCard.PropTypes = {
+MovieCard.propTypes = {
     movie: (0, _propTypesDefault.default).shape({
         _id: (0, _propTypesDefault.default).string.isRequired,
         title: (0, _propTypesDefault.default).string.isRequired,
-        genre: (0, _propTypesDefault.default).string,
-        director: (0, _propTypesDefault.default).string,
         description: (0, _propTypesDefault.default).string,
-        image: (0, _propTypesDefault.default).string.isRequired
+        director: (0, _propTypesDefault.default).shape({
+            _id: (0, _propTypesDefault.default).string.isRequired,
+            name: (0, _propTypesDefault.default).string,
+            birth: (0, _propTypesDefault.default).string,
+            bio: (0, _propTypesDefault.default).string
+        }),
+        genre: (0, _propTypesDefault.default).shape({
+            _id: (0, _propTypesDefault.default).string.isRequired,
+            name: (0, _propTypesDefault.default).string,
+            description: (0, _propTypesDefault.default).string
+        }),
+        image: (0, _propTypesDefault.default).string
     }).isRequired,
     onMovieClick: (0, _propTypesDefault.default).func.isRequired
 };
@@ -28219,7 +28183,8 @@ const MovieView = ({ movie , onBackClick  })=>{
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                    src: movie.image
+                    src: movie.image,
+                    alt: movie.title
                 }, void 0, false, {
                     fileName: "src/components/movie-view/MovieView.jsx",
                     lineNumber: 5,
@@ -28262,7 +28227,7 @@ const MovieView = ({ movie , onBackClick  })=>{
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                        children: movie.director
+                        children: movie.director[0].name
                     }, void 0, false, {
                         fileName: "src/components/movie-view/MovieView.jsx",
                         lineNumber: 13,
@@ -28280,20 +28245,42 @@ const MovieView = ({ movie , onBackClick  })=>{
                         children: "Genre: "
                     }, void 0, false, {
                         fileName: "src/components/movie-view/MovieView.jsx",
-                        lineNumber: 16,
+                        lineNumber: 17,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                        children: movie.genre
+                        children: movie.genre[0].name
                     }, void 0, false, {
                         fileName: "src/components/movie-view/MovieView.jsx",
-                        lineNumber: 17,
+                        lineNumber: 18,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/movie-view/MovieView.jsx",
-                lineNumber: 15,
+                lineNumber: 16,
+                columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                        children: "Description: "
+                    }, void 0, false, {
+                        fileName: "src/components/movie-view/MovieView.jsx",
+                        lineNumber: 21,
+                        columnNumber: 9
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                        children: movie.description
+                    }, void 0, false, {
+                        fileName: "src/components/movie-view/MovieView.jsx",
+                        lineNumber: 22,
+                        columnNumber: 9
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/components/movie-view/MovieView.jsx",
+                lineNumber: 20,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -28301,7 +28288,7 @@ const MovieView = ({ movie , onBackClick  })=>{
                 children: "Back"
             }, void 0, false, {
                 fileName: "src/components/movie-view/MovieView.jsx",
-                lineNumber: 19,
+                lineNumber: 24,
                 columnNumber: 7
             }, undefined)
         ]
