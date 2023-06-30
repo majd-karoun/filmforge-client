@@ -2,9 +2,29 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import './movie-view.scss'
 
-export const MovieView = ({ movies }) => {
+export const MovieView = ({ movies, user, token}) => {
   const {movieId} = useParams();
   const movie = movies.find((m) => m._id === movieId)
+
+  const addToFavorites = () => {
+    fetch(`https://filmforge.herokuapp.com/users/${user.Username}/movies/${movie._id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    }).then(response => {
+      if (response.ok) {
+        alert('Movie added to favorites');
+      } else {
+        alert('Failed to add movie to favorites');
+      }
+    }).catch(error => {
+      console.log(error);
+      alert('Failed to add movie to favorites');
+    });
+  }
+
   return (
     <div>
       <div>
@@ -30,6 +50,7 @@ export const MovieView = ({ movies }) => {
       <Link to={`/`}>
         <button className="back-button">Back</button>
       </Link>
+      <button onClick={addToFavorites} className="favorite-button">Add to favorites</button>
     </div>
   );
 };

@@ -6,6 +6,7 @@ import { SignupView } from "../signup-view/SignupView";
 import { Col, Row } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { NavigationBar } from "../navigation-bar/NavigationBar";
+import ProfileView from "../profile-view/ProfileView";
 
 export const MainView = () => {
 
@@ -86,7 +87,7 @@ export const MainView = () => {
                   <Col>The list is empty!</Col>
                 ) : (
                   <Col md={8}>
-                    <MovieView movies={movies} />
+                    <MovieView movies={movies} user={user} token={token} />
                   </Col>
                 )}
               </>
@@ -109,6 +110,19 @@ export const MainView = () => {
                     ))}
                   </>
                 )}
+              </>
+            }
+          />
+          <Route
+            path="/users/:username"
+            element={
+              <>
+                {!user ? 
+                  <Navigate to="/login" replace />
+                
+                 : <ProfileView onLoggedOut={onLogOut} token={token}/>
+                 
+            }
               </>
             }
           />
