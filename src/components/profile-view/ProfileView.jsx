@@ -15,7 +15,7 @@ const ProfileView = ({ token, onLoggedOut }) => {
       }
       try {
         const response = await fetch(
-          `http://localhost:8080/users/${username}`,
+          `https://filmforge.herokuapp.com/users/${username}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -41,7 +41,7 @@ const ProfileView = ({ token, onLoggedOut }) => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/users/${username}`, {
+      const response = await fetch(`https://filmforge.herokuapp.com/users/${username}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -77,7 +77,7 @@ const ProfileView = ({ token, onLoggedOut }) => {
     ) {
       try {
         const response = await fetch(
-          `http://localhost:8080//users/${username}`,
+          `https://filmforge.herokuapp.com/users/${username}`,
           {
             method: "DELETE",
             headers: { Authorization: `Bearer ${token}` },
@@ -98,7 +98,7 @@ const ProfileView = ({ token, onLoggedOut }) => {
   const handleRemoveFavorite = async (movieId) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/users/${username}/movies/${movieId}`,
+        `https://filmforge.herokuapp.com/users/${username}/movies/${movieId}`,
         {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },
